@@ -6,7 +6,7 @@ var CartSchema = mongoose.Schema({
     id:Number,
     created: Date,
     updated: Date,
-    products:Array
+    products:[]
 });
 
 var Cart = mongoose.model('Cart', CartSchema);
