@@ -1,16 +1,25 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
 
-var model = require('../models/Product');
+var ProductSchema = mongoose.Schema({
+    id:Number,
+    title:String,
+    price: Number,
+    description:String,
+    images:[]
+});
+
+var Product = mongoose.model('Product', ProductSchema);
 
 //create a product
 router.post('/create', function(req, res, next) {
-    var product = model.Product({
+    var product = Product({
         id: req.body.id,
         title: req.body.title,
         price: req.body.price,
         description: req.body.description,
-        images: req.body.images
+        images: null
     });
     product.save(function(err, result){
         if(err) throw err;
@@ -21,9 +30,7 @@ router.post('/create', function(req, res, next) {
 
 //modify a product
 router.post('/update/:id', function(req, res, next){
-    var product = model.Product();
-
-    product.findOneAndUpdate({ _id: req.params.id }, {
+    Product.findOneAndUpdate({ _id: req.params.id }, {
         $set:{
             id: req.body.id,
             title: req.body.title,

@@ -1,11 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-var model = require('../models/User');
+var mongoose = require('mongoose');
+
+var UserSchema = mongoose.Schema({
+  firstName:String,
+  lastName: String,
+  email:String
+});
+
+var User = mongoose.model('User', UserSchema);
 
 //create a user
 router.post('/create', function(req, res, next) {
-  var user = model.User({
+  var user = User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email
@@ -19,9 +27,7 @@ router.post('/create', function(req, res, next) {
 
 //modify a user
 router.post('/update/:id', function(req, res, next){
-  var user = model.User();
-
-  user.findOneAndUpdate({ _id: req.params.id }, {
+  User.findOneAndUpdate({ _id: req.params.id }, {
     $set:{
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -35,10 +41,7 @@ router.post('/update/:id', function(req, res, next){
 
 //get a user
 router.get('/:id', function(req,res,next){
-
-  var user = model.User();
-
-  user.find({ _id: req.params.id }, function(err, result){
+  User.find({ _id: req.params.id }, function(err, result){
     if(err) throw err;
     res.status(200).send(result);
   });
@@ -47,9 +50,7 @@ router.get('/:id', function(req,res,next){
 
 //delete a user
 router.post('/delete', function(req, res, next){
-  var user = model.User;
-
-  user.findOneAndRemove({'_id': req.body.id }, function(err, result){
+  User.findOneAndRemove({'_id': req.body.id }, function(err, result){
     if(err) throw err;
     res.status(200).send(result);
   });
