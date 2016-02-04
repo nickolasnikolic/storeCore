@@ -6,12 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-mongoose.connect( process.env.MONGOURI || 'mongodb://localhost/storeCore' );
+mongoose.connect( process.env.MONGOLAB_URI || 'mongodb://localhost:27017/storeCore' );
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-
-var Schema = mongoose.Schema;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
