@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
-
 var ProductSchema = mongoose.Schema({
     id:Number,
     title:String,
@@ -10,4 +8,8 @@ var ProductSchema = mongoose.Schema({
     images:Array
 });
 
-var Product = mongoose.model('Product', ProductSchema);
+ProductSchema.methods.findAll = function(cb){
+    return this.model('Product').find({}, cb);
+};
+
+exports.Product = mongoose.model('Product', ProductSchema);

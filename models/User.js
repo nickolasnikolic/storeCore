@@ -1,11 +1,14 @@
 var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
-
 var UserSchema = mongoose.Schema({
     firstName:String,
     lastName: String,
     email:String
 });
 
-var User = mongoose.model('User', UserSchema);
+// assign a function to the "methods" object of our animalSchema
+UserSchema.methods.findAll = function (cb) {
+    return this.model('User').find({}, cb);
+};
+
+exports.User = mongoose.model('User', UserSchema);

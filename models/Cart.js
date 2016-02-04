@@ -1,12 +1,15 @@
 var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
-
 var CartSchema = mongoose.Schema({
     id:Number,
     created: Date,
     updated: Date,
-    products:[]
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    products: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Product'} ]
 });
 
-var Cart = mongoose.model('Cart', CartSchema);
+CartSchema.methods.findAll = function (cb) {
+    return this.model('Cart').find({}, cb);
+};
+
+exports.Cart = mongoose.model('Cart', CartSchema);

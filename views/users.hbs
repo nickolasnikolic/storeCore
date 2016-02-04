@@ -1,3 +1,10 @@
+<form action="/users" method="post">
+    <input placeholder="first name" type="text" name="firstName"/>
+    <input placeholder="last name" type="text" name="lastName"/>
+    <input placeholder="email" type="text" name="email"/>
+    <button>go</button>
+</form>
+
 {{#each users}}
 <p>{{firstName}} {{lastName}} - {{email}}</p>
 {{/each}}

@@ -1,15 +1,30 @@
 var express = require('express');
 var router = express.Router();
 
-var users = [{firstName:'bill',lastName:'brother',email:'a@b.c'}];
+var model = require('../models/User');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render( 'users', {users: users} );
+/* POST  users listing. */
+router.post('/', function(req, res, next) {
+  var user = model.User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email
+  });
+  user.save(function(err, result){
+    if(err) throw err;
+    res.redirect('/users');
+  });
 });
 
-router.get('/test', function(req,res,next){
-  res.send('just a test, don\'t panic.');
+router.get('/', function(req,res,next){
+
+  var user = model.User();
+
+  user.findAll(function(err, result){
+    if(err) throw err;
+    res.render('users', {users: result});
+  });
+
 });
 
 module.exports = router;
