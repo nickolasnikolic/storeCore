@@ -6,9 +6,4 @@ var UserSchema = mongoose.Schema({
     email:String
 });
 
-// assign a function to the "methods" object of our animalSchema
-UserSchema.methods.findAll = function (cb) {
-    return this.model('User').find({}, cb);
-};
-
 exports.User = mongoose.model('User', UserSchema);

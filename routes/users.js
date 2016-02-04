@@ -3,8 +3,8 @@ var router = express.Router();
 
 var model = require('../models/User');
 
-/* POST  users listing. */
-router.post('/', function(req, res, next) {
+//create a user
+router.post('/create', function(req, res, next) {
   var user = model.User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -12,19 +12,47 @@ router.post('/', function(req, res, next) {
   });
   user.save(function(err, result){
     if(err) throw err;
-    res.redirect('/users');
+    res.status(200).send(result);
   });
 });
 
-router.get('/', function(req,res,next){
+
+//modify a user
+router.post('/update/:id', function(req, res, next){
+  var user = model.User();
+
+  user.findOneAndUpdate({ _id: req.params.id }, {
+    $set:{
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    }
+  }, function(err, result){
+    if(err) throw err;
+    res.status(200).send(result);
+  });
+})
+
+//get a user
+router.get('/:id', function(req,res,next){
 
   var user = model.User();
 
-  user.findAll(function(err, result){
+  user.find({ _id: req.params.id }, function(err, result){
     if(err) throw err;
-    res.render('users', {users: result});
+    res.status(200).send(result);
   });
 
+});
+
+//delete a user
+router.post('/delete', function(req, res, next){
+  var user = model.User;
+
+  user.findOneAndRemove({'_id': req.body.id }, function(err, result){
+    if(err) throw err;
+    res.status(200).send(result);
+  });
 });
 
 module.exports = router;

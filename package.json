@@ -12,6 +12,7 @@
     "express": "~4.13.1",
     "hbs": "~3.1.0",
     "less-middleware": "1.0.x",
+    "moment": "^2.11.2",
     "mongodb": "^2.0.46",
     "mongoose": "^4.1.12",
     "morgan": "~1.6.1",

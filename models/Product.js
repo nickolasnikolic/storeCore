@@ -8,8 +8,4 @@ var ProductSchema = mongoose.Schema({
     images:Array
 });
 
-ProductSchema.methods.findAll = function(cb){
-    return this.model('Product').find({}, cb);
-};
-
 exports.Product = mongoose.model('Product', ProductSchema);
